@@ -74,7 +74,6 @@ app.get('/bmaZone', (req, res) => {
           return res.json(err)
         } else {
           var result = result.rows[0]
-          result.features[0].properties = {}
           client.release()
           return res.json(result)
         }
@@ -126,7 +125,6 @@ app.get('/community', (req, res) => {
           return res.json(err)
         } else {
           var result = result.rows[0]
-          result.features[0].properties = {}
           client.release()
           return res.json(result)
         }
