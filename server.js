@@ -67,7 +67,7 @@ app.get('/bmaZone', (req, res) => {
     try{
       await client.query(` SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features 
                            FROM (SELECT 'Feature' As type , ST_AsGeoJSON(lg.geom)::json As geometry,
-                                        row_to_json((SELECT l FROM (SELECT  id,z_code, z_name, z_name_e, no_male, no_female, no_house, no_commu, z_area) As l )) As properties 
+                                        row_to_json((SELECT l FROM (SELECT  id,z_code, z_name, z_name_e, no_male, no_female,(no_male + no_female) pop, no_house, no_commu, z_area) As l )) As properties 
                                  FROM bma_zone As lg ) AS f`,
                     (err,result)=>{
         if (err){
@@ -92,7 +92,7 @@ app.get('/district', (req, res) => {
     try{
       await client.query(` SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features 
                            FROM (SELECT 'Feature' As type , ST_AsGeoJSON(lg.geom)::json As geometry,
-                                        row_to_json((SELECT l FROM (SELECT  id, objectid, area, dcode, dname, dname_e, pcode, no_female, pname, no_male, no_health, no_temple, no_commu, no_hos, no_sch) As l )) As properties 
+                                        row_to_json((SELECT l FROM (SELECT  id, objectid, area, dcode, dname, dname_e, pcode, no_female, pname, no_male, no_health, no_temple, no_commu, no_hos, no_sch, (no_male + no_female) pop) As l )) As properties 
                                  FROM district As lg ) AS f`,
                     (err,result)=>{
         if (err){
@@ -120,6 +120,33 @@ app.get('/community', (req, res) => {
                            FROM (SELECT 'Feature' As type , ST_AsGeoJSON(lg.geom)::json As geometry,
                                         row_to_json((SELECT l FROM (SELECT id, comm_id, name, dcode, scode, type, x, y) As l )) As properties 
                                   FROM community As lg ) AS f`,
+                    (err,result)=>{
+        if (err){
+          return res.json(err)
+        } else {
+          var result = result.rows[0]
+          client.release()
+          return res.json(result)
+        }
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+})
+
+app.get('/zone/:zoneId', (req, res) => {
+  var zone = req.params.zoneId
+  db()
+  async function db(){
+    const client = await pool.connect()
+    try{
+      await client.query(`SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features 
+                           FROM (SELECT 'Feature' As type , ST_AsGeoJSON(geom)::json As geometry,
+                                 row_to_json((SELECT l 
+                                               FROM ( SELECT  id,z_code, z_name, z_name_e, no_male, no_female, no_house, no_commu, z_area) As l )) As properties 
+                                 FROM bma_zone WHERE z_code = '${zone}'::text) AS f `,
                     (err,result)=>{
         if (err){
           return res.json(err)
