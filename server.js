@@ -1,9 +1,13 @@
 
-const express = require('express')
-var cors = require('cors')
-const pool = require('./pg_connect.js')
+const express = require('express');
+var cors = require('cors');
+const pool = require('./pg_connect.js');
+const { google } = require('googleapis');
+const fs = require('fs');
 
 const app = express()
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 
 app.use(cors())
 app.get('/', (req, res) => {
@@ -24,7 +28,7 @@ app.get('/point', (req, res) => {
           return res.json(err)
         } else {
           var result = result.rows[0]
-          client.release()
+          client.release()  
           return res.json(result)
         }
       })
@@ -162,7 +166,104 @@ app.get('/zone/:zoneId', (req, res) => {
     }
   }
 })
-    
+
+app.get('/electionZone/:zone', (req, res) => {
+  var zone = req.params.zone
+  db()
+  async function db(){
+    const client = await pool.connect()
+    try{
+      await client.query(`SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features 
+                          FROM (SELECT 'Feature' As type , ST_AsGeoJSON(geom)::json As geometry,
+                                row_to_json((SELECT l 
+                                              FROM ( SELECT  elction_z, "ชื่อถนน", length_1_dir, length_2_dir, num_sign_per_km ) As l )) As properties 
+                                FROM sing_install_road_zone WHERE elction_z = ${zone} ) AS f  `,
+                    (err,result)=>{
+        if (err){
+          return res.json(err)
+        } else {
+          var result = result.rows[0]
+          client.release()
+          return res.json(result)
+        }
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+})
+
+//Google Sheets Service API 
+
+
+
+app.get('/signSheets', async (req,res)=>{
+  const { request, name } = req.body;
+
+  const auth = new google.auth.GoogleAuth({
+    keyFile:'signlocationsnode-bf2c0a5fb5f3.json',
+    scopes:'https://www.googleapis.com/auth/spreadsheets'
+  });
+
+  const client = await auth.getClient();
+  // Instance of Google Sheets API
+  const googleSheets = google.sheets({ version: "v4", auth: client });
+
+  const spreadsheetId = "1Ojr7ZaMpIIVQhLp1iMkUZdBEEpHd3p6lUp7G_NKR6s0";
+
+  // Get metadata about spreadsheet
+  const metaData = await googleSheets.spreadsheets.get({
+    auth,
+    spreadsheetId,
+  });
+
+  const getRows = await googleSheets.spreadsheets.values.get({
+    auth,
+    spreadsheetId,
+    range: "respone1"
+  });
+
+ const resData = getRows.data.values
+ var Json = {
+  "type": "FeatureCollection",
+  "features": []
+  }
+
+ resData.forEach((data,i) => {
+   var coor = []
+
+   if (data[5] !== undefined){
+       coor = [parseFloat(data[5].split(",")[0]),parseFloat(data[5].split(",")[1])]
+   }
+
+   if (i !== 0){
+     if (data[5] !== undefined){
+      Json.features.push(
+        {
+          "type": "Feature",
+          "properties": {
+            "timsStamp":data[0],
+            "teamNum":data[1],
+            "signType":data[2],
+            "GeoStamp":data[4],
+            "GeoAddress":data[6],
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [parseFloat(data[5].split(",")[1]),parseFloat(data[5].split(",")[0])]
+          }
+        }
+      )
+     }
+    } 
+ 
+ });
+ //console.log(Json)
+ res.send(Json)
+ 
+})
+
 app.listen(4005, () => {
   console.log('Start server at port 4005.')
 })

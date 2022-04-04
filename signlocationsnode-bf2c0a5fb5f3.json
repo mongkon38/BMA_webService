@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "signlocationsnode",
+  "private_key_id": "bf2c0a5fb5f3d07dcb89d37158c8c22e814cac7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCDa20NKkTeSRTQ\nAgkfakoWT4NAFri8FKHM4ool/t4ERD9MLk5rMt7tfAWU3fz3jkXRpibtSONmeLtD\ntUyKvG7JmQj/AdWY/ExcwHBEg6M4jiOnsnZp+nCkhtEM0qLQx6/7qX1QhE2jla3c\nG7wbB/Zl0Ug8tXl2vG9C+b3YLzRXFq0kczjWc6CiX9eknJBgY8IRHRIOSmIT5sO2\n17DKJhNoxP1M+8wzSXy7Wm6fQtDrVpro24A1Hz36K+guh6peZLvfPlyROdDFdXoe\nEAEdP8Km0s7AscIZOSABFM2l0mAl55kR3Al1cdRAqyk8Dn/n64GHigiAcKDfgazt\n18RXCb69AgMBAAECggEANO9qh6kFAHxzc62+Ovc3THFOrtv4IVo2Ki798nwMta8/\nx9HHKIrfHM2d+e7I3HZkTSQd/eokHrx2wbkfUarA/Vc1NnJotSy7HYkuL4rOjhNC\n7WOHKv0DrmHXhtC5YFtu2XHV1j7UfxXlaAmL5V95sl1wOXPnrxoLvvCVtaSd8o3O\nACXP1FuarGdrDQONmf/JN4KChBvL8xtzC6AiLqRm/30BMnNy3o/7ZhXwGGTuFEz3\nQVWedgi2jirJBs6UKLKewL/mK27GR2JQGm+2F+dN+Evv/d5v6Z1leDGxAQQ3RQrk\n+Iv4BQ+fP4Z1V1k3g2UmjkqAluldxjHy9J2AHkTXCQKBgQC4A3J8z7S3k1sE3kgP\n581jxHCW1YWJtFNzYMpU7T/a0PodtdzidRO7kTxJPby1SDaxzSJUoHAnF+CZeY47\nDhbUuAcpirywdjfTOR/UygRpkggxbBS1zGp7uf2UGBrf0SKqsLAuTVTw5BKtf0zs\n5F1KVuATNxHH7J6It1e5eNWhcwKBgQC21NHMPUCY9J7s1oT3Ch34IZ5ceVpEUcWQ\n2q+accDedqpDWJ9bJdnNIX5Elb7pmsFN2FrGVxKe9B/8ZZLI8mdQ9hSqpLAemehM\nNqcf+VcGxV4/55trw4OIPGSA/9jR4GokITI2WArY72v2ZVD0x7vQjhTRfQVZsyMi\nmPxSNN9TDwKBgDoe/J5njJEfPfR/sQs1EC6e8WDy+EbSajlbLQ0+EpkuwJF5y9bL\nW/w2l3Aay+wGbyAhxuIr+sCeTharyjzk6lkt9zUr2QVzkZZpyKARXutpcKULmk8B\nzfBegrWwF2zyRZzcSgmV62pa33tlZgq85qqAXi4ziq43EqvkHRU8EV35AoGARyIC\nBi6GpXv3ITpNPThIdLPPwzbLse0GqtcKn1JGsccFc3JVfcb6OF8hm1mPj5/QOZNF\nrglOi1173F1AgMIfBFbZr5KnmyBSSuSwnTYLb+z2QHLB+2l0EVs91xqzpuRjJ29q\n883JWqG8JX9Bwhq7rea5ns+/dyjFML7I3MsJYG0CgYAKpHkqsuIGpRGOmzw1PJxy\n8zInweJgKCjFmWa1dHfe2pILR8+KTC0n3aoJJ7Js3pkCLDQLDhOA+oVYC/QzIbsg\nub9E3tTREr0XbUaAo45Wdx4jRuQh/Ms0oG2oYtf2nINuXNXwygz5tXffpNOgJGZX\nm1oUg/AH2DRSef+EaR8SsQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "bkk-sign-location@signlocationsnode.iam.gserviceaccount.com",
+  "client_id": "114889320568651963404",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bkk-sign-location%40signlocationsnode.iam.gserviceaccount.com"
+}
