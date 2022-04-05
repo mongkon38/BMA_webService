@@ -1,15 +1,24 @@
 
+var https = require('https');
 const express = require('express');
 var cors = require('cors');
 const pool = require('./pg_connect.js');
 const { google } = require('googleapis');
 const fs = require('fs');
 
+var https_options = {
+  cert: fs.readFileSync('./ssl/infraplus-ru.org.crt'),
+  key: fs.readFileSync('./ssl/infraplus-ru.org.key'),
+  ca: fs.readFileSync('./ssl/infraplus-ru.org.ca')
+};
+
 const app = express()
+var server = https.createServer( https_options , app );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.use(cors())
+const port = 4445
 app.get('/', (req, res) => {
   res.send('Hello World')
 })
@@ -264,6 +273,6 @@ app.get('/signSheets', async (req,res)=>{
  
 })
 
-app.listen(4005, () => {
-  console.log('Start server at port 4005.')
+server.listen(port, () => {
+  console.log(`Start server at port ${port}`)
 })
